@@ -9,7 +9,7 @@ import UIKit
 import AVKit
 import Vision
 
-class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate {
+ final class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate {
     
     // Main view for showing camera content.
     @IBOutlet weak var previewView: UIView?
@@ -557,6 +557,14 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
             let faceObservation = VNFaceObservation(boundingBox: observation.boundingBox)
             faceLandmarksRequest.inputFaceObservations = [faceObservation]
             
+            if observation.boundingBox.maxX <= 0.5 {
+                self.faceLeft()
+            }
+            
+            if observation.boundingBox.maxX >= 0.9 {
+                self.faceRight()
+            }
+            
             // Continue to track detected facial landmarks.
             faceLandmarkRequests.append(faceLandmarksRequest)
             
@@ -571,4 +579,29 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
             }
         }
     }
+    
+    private func faceLeft() {
+        let alert: UIAlertController = UIAlertController(title: "顔の移動検出", message: "顔が左に移動したことを検出しました", preferredStyle: UIAlertController.Style.alert)
+        
+        let defaultAction: UIAlertAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler:{ (action: UIAlertAction!) -> Void in print("OK") })
+        
+        let cancelAction: UIAlertAction = UIAlertAction(title: "キャンセル", style: UIAlertAction.Style.cancel, handler:{ (action: UIAlertAction!) -> Void in print("Cancel") })
+        
+        alert.addAction(cancelAction)
+        alert.addAction(defaultAction)
+        present(alert, animated: true, completion: nil)
+    }
+    
+    private func faceRight() {
+        let alert: UIAlertController = UIAlertController(title: "顔の移動検出", message: "顔が右に移動したことを検出しました", preferredStyle: UIAlertController.Style.alert)
+        
+        let defaultAction: UIAlertAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler:{ (action: UIAlertAction!) -> Void in print("OK") })
+        
+        let cancelAction: UIAlertAction = UIAlertAction(title: "キャンセル", style: UIAlertAction.Style.cancel, handler:{ (action: UIAlertAction!) -> Void in print("Cancel") })
+        
+        alert.addAction(cancelAction)
+        alert.addAction(defaultAction)
+        present(alert, animated: true, completion: nil)
+    }
+    
 }
