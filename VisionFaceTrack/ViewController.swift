@@ -251,6 +251,9 @@ import Vision
                 for observation in results {
                     let faceTrackingRequest = VNTrackObjectRequest(detectedObjectObservation: observation)
                     requests.append(faceTrackingRequest)
+                    
+                    // 顔のロールの取得
+                    print(observation.roll)
                 }
                 self.trackingRequests = requests
             }
@@ -581,7 +584,7 @@ import Vision
     }
     
     private func faceLeft() {
-        let alert: UIAlertController = UIAlertController(title: "顔の移動検出", message: "顔が左に移動したことを検出しました", preferredStyle: UIAlertController.Style.alert)
+        let alert: UIAlertController = UIAlertController(title: "顔の寄っている方向", message: "顔が左に寄っています", preferredStyle: UIAlertController.Style.alert)
         
         let defaultAction: UIAlertAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler:{ (action: UIAlertAction!) -> Void in print("OK") })
         
@@ -593,7 +596,7 @@ import Vision
     }
     
     private func faceRight() {
-        let alert: UIAlertController = UIAlertController(title: "顔の移動検出", message: "顔が右に移動したことを検出しました", preferredStyle: UIAlertController.Style.alert)
+        let alert: UIAlertController = UIAlertController(title: "顔の寄っている方向", message: "顔が右に寄っています", preferredStyle: UIAlertController.Style.alert)
         
         let defaultAction: UIAlertAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler:{ (action: UIAlertAction!) -> Void in print("OK") })
         
